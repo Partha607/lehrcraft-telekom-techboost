@@ -135,6 +135,13 @@
   .concept-tag{display:inline-block; padding:6px 14px; border-radius:999px; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform: uppercase; margin-bottom: 20px;}
   .tag-ai{background:rgba(239,111,116,.15); color:var(--coral);}
   .tag-db{background:rgba(56,182,173,.15); color:var(--teal);}
+  
+  /* TARGET AUDIENCE */
+  .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .audience-card{border:1px solid rgba(0,0,0,0.1); border-radius:24px; padding:32px; text-align: center; background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); color: #000000;}
+  .audience-card h3{font-size:24px; margin:0 0 12px; color: #000000;}
+  .audience-card p, .audience-card h5{font-size:16px; color:#000000; line-height:1.5; margin:0; font-weight: normal;}
+  .audience-icon { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin: 0 auto 20px; background: rgba(57,71,227,0.1); color: var(--blue); border-radius: 16px; }
 
   /* ROADMAP */
   .timeline{display:flex; flex-direction: column; gap:20px; position: relative;}
@@ -146,12 +153,6 @@
   .step p{margin:0; color:var(--muted); font-size:17px; line-height:1.6;}
   .step.vision .step-marker{border-color: var(--coral);}
   .step.vision .k{color: var(--coral);}
-
-  /* TARGET AUDIENCE */
-  .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .audience-card{border:1px solid var(--line); border-radius:24px; padding:32px; text-align: center; background: rgba(0,0,0,0.2);}
-  .audience-card h3{font-size:24px; margin:0 0 12px;}
-  .audience-card p{font-size:16px; color:var(--muted); line-height:1.5; margin:0;}
 
   /* RESPONSIVE */
   @media (max-width: 1024px){
@@ -170,6 +171,7 @@
     .step { padding: 24px 24px 24px 64px; }
     .step-marker { left: 10px; top: 28px; }
   }
+  
   /* SCROLL TO TOP BUTTON */
   .scroll-top-btn {
     position: fixed;
@@ -232,6 +234,7 @@
     <a href="#roadmap">Roadmap</a>
   </nav>
   <div class="nav-meta">
+    <a href="ppt.html" class="btn btn-outline">Präsentation</a>
     <a href="telekom_pitch.html" class="btn btn-tech">Technical Pitch</a>
   </div>
 </div>
@@ -376,19 +379,25 @@
   
   <div class="audience-grid">
     <div class="audience-card">
-      <div style="font-size: 40px; margin-bottom: 20px;">👩‍🏫</div>
+      <div class="audience-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      </div>
       <h3>Für Lehrkräfte</h3>
-      <p>Sofortiger Zugang zu hochwertigen Materialien im B2C-Modell. Weniger Vorbereitung, mehr Fokus auf den direkten Austausch mit der Klasse.</p>
+      <h5>Sofortiger Zugang zu hochwertigen Materialien im B2C-Modell. Weniger Vorbereitung, mehr Fokus auf den direkten Austausch mit der Klasse.</h5>
     </div>
     <div class="audience-card">
-      <div style="font-size: 40px; margin-bottom: 20px;">🏫</div>
+      <div class="audience-icon" style="color: var(--teal); background: rgba(56,182,173,0.1);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14"/><path d="M9 20v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M9 14h.01"/><path d="M15 14h.01"/></svg>
+      </div>
       <h3>Für Schulen & Länder</h3>
-      <p>Skalierbare B2B-Lizenzen, DSGVO-konformes Hosting in Deutschland und anpassbare Inhalte nach länderspezifischen Bildungsplänen.</p>
+      <h5>Skalierbare B2B-Lizenzen, DSGVO-konformes Hosting in Deutschland und anpassbare Inhalte nach länderspezifischen Bildungsplänen.</h5>
     </div>
     <div class="audience-card">
-      <div style="font-size: 40px; margin-bottom: 20px;">🎓</div>
+      <div class="audience-icon" style="color: var(--coral); background: rgba(226,0,116,0.1);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
       <h3>Für Lernende (Vision)</h3>
-      <p>In Zukunft: Direkter Dialog mit sicheren KI-Avataren historischer Figuren, gestützt durch unsere halluzinationsfreie Datenbank-Architektur.</p>
+      <h5>In Zukunft: Direkter Dialog mit sicheren KI-Avataren historischer Figuren, gestützt durch unsere halluzinationsfreie Datenbank-Architektur.</h5>
     </div>
   </div>
 </div>
