@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lehrcraft.art – Die Zukunft des Lernens</title>
+<style>
+  :root{
+    --bg:#08090c;
+    --bg-2:#0d1016;
+    --cream:#f3eddc;
+    --text:#f4efdf;
+    --muted:#c8c0ac;
+    --ink:#091018;
+    --blue:#3947e3;
+    --yellow:#efc62e;
+    --teal:#38b6ad;
+    --coral:#e20074; /* Telekom Magenta / Coral */
+    --card:#121723;
+    --line:rgba(255,255,255,.12);
+    --shadow:0 18px 42px rgba(0,0,0,.32);
+    --radius:30px;
+    --radius-sm:22px;
+    --max:1280px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 1px 1px, rgba(57,71,227,.16) 1px, transparent 0) 0 0/12px 12px,
+      linear-gradient(180deg, #06070a 0%, #0a0d12 100%);
+    -webkit-font-smoothing:antialiased;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    overflow-x: hidden;
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  
+  /* HEADER */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(8,9,12,.85); backdrop-filter: blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    min-height:88px;
+  }
+  .brand svg { height: 32px; width: auto; display: block; }
+  .nav-links{display:flex; gap:32px; align-items:center;}
+  .nav-links a{color:var(--cream); text-decoration:none; font-size:15px; font-weight:500; opacity:.8; transition: opacity 0.2s;}
+  .nav-links a:hover{opacity:1; color: var(--yellow);}
+  .nav-meta{display:flex; align-items:center; gap:16px;}
+  
+  /* BUTTONS */
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:12px; padding:14px 24px; border-radius:999px; text-decoration:none; font-weight:600; font-size:15px; transition: all 0.2s; box-shadow:var(--shadow); cursor: pointer; border: none;}
+  .btn:hover{transform: translateY(-2px); box-shadow: 0 22px 48px rgba(0,0,0,.4);}
+  .btn-tech{background:var(--coral); color:white; border: 1px solid rgba(255,255,255,0.2);}
+  .btn-tech:hover{background:#c00062;}
+  .btn-main{background:var(--blue); color:white;}
+  .btn-outline{background:rgba(255,255,255,.05); color:var(--text); border:1px solid rgba(255,255,255,.2);}
+  .btn-outline:hover{background:rgba(255,255,255,.1);}
+
+  /* HERO */
+  .hero{padding:90px 0 80px; position: relative; overflow: hidden;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:center; position: relative; z-index: 2;}
+  .eyebrow{font-size:14px; text-transform:uppercase; letter-spacing:.12em; color:var(--yellow); margin-bottom:24px; font-weight: 700;}
+  h1{font-size:72px; line-height:1.05; letter-spacing:-.04em; margin:0 0 24px; max-width:680px; font-weight: 800;}
+  .hero p{font-size:24px; line-height:1.4; color:#d6cdb9; max-width:640px; margin:0 0 36px; font-weight: 400;}
+  .hero-copy{padding:24px 0;}
+  .button-row{display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
+
+  /* ORBITAL ARTWORK */
+  .hero-art{position:relative; min-height:580px; display: flex; align-items: center; justify-content: center;}
+  .planet{position:absolute; border-radius:50%; display:grid; place-items:center; text-align:center; box-shadow:var(--shadow); overflow:hidden; transition: transform 2s ease-in-out;}
+  .planet.large{width:360px; height:360px; right:40px; top:40px; background:linear-gradient(135deg, rgba(239,111,116,.9), rgba(190,40,80,.9)); z-index: 2;}
+  .planet.small{width:220px; height:220px; right:0; bottom:20px; background:linear-gradient(135deg, rgba(56,182,173,.9), rgba(20,120,110,.9)); z-index: 3;}
+  .planet .planet-label{font-size:48px; line-height:1; font-weight:900; letter-spacing:-.06em; color:#1f0e10; mix-blend-mode:overlay; opacity: 0.8;}
+  .planet .planet-sub{font-size:18px; margin-top:8px; color:rgba(255,255,255,.9); font-weight:600; letter-spacing: 0.02em;}
+  .ring{position:absolute; border:2px solid rgba(255,255,255,0.1); border-radius:50%; transform:rotate(-20deg); pointer-events: none;}
+  .ring.one{width:600px; height:200px; right:-20px; top:220px; border-color: transparent rgba(239,198,46,0.4) rgba(239,198,46,0.4) transparent; border-width: 4px;}
+  .ring.two{width:540px; height:180px; right:10px; top:230px; border-color: transparent rgba(56,182,173,0.4) rgba(56,182,173,0.4) transparent; border-width: 4px;}
+  .beam{position:absolute; right:140px; top:280px; width:280px; height:6px; background:linear-gradient(90deg, transparent, var(--yellow), transparent); transform:rotate(-42deg); border-radius:999px; z-index: 4; opacity: 0.8; box-shadow: 0 0 20px var(--yellow);}
+
+  /* SECTIONS */
+  .section{padding:100px 0;}
+  .section.light{
+    color:#0d1118;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,.05) 1px, transparent 0) 0 0/16px 16px,
+      var(--cream);
+  }
+  .section.dark{background:transparent;}
+  .section-head{margin-bottom:50px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;}
+  .section-head.left { text-align: left; margin-left: 0; }
+  .section-head .overline{font-size:16px; text-transform:uppercase; letter-spacing:.1em; color:var(--yellow); font-weight: 700; margin-bottom:16px;}
+  .section.light .section-head .overline { color: var(--blue); }
+  .section-head h2{font-size:52px; line-height:1.1; letter-spacing:-.04em; margin:0 0 20px;}
+  .section-head p{font-size:22px; line-height:1.5; margin:0; opacity:.85; font-weight: 400;}
+
+  /* USP GRID */
+  .usp-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:40px;}
+  .usp-card{background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:32px; padding:40px; transition: transform 0.3s; position: relative; overflow: hidden;}
+  .usp-card:hover{transform: translateY(-5px); background:rgba(255,255,255,.05);}
+  .usp-card .icon{width:64px; height:64px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:24px; background:rgba(255,255,255,.05);}
+  .usp-card.blue .icon { background: rgba(57,71,227,.2); color: #8892f8; }
+  .usp-card.yellow .icon { background: rgba(239,198,46,.2); color: var(--yellow); }
+  .usp-card.teal .icon { background: rgba(56,182,173,.2); color: var(--teal); }
+  .usp-card h3{font-size:26px; margin:0 0 16px; letter-spacing:-.03em;}
+  .usp-card p{font-size:17px; line-height:1.6; color:var(--muted); margin:0;}
+
+  /* PRODUCT SHOWCASE */
+  .product-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .product-image{background:#121723; border-radius:40px; padding:40px; border:1px solid var(--line); box-shadow:var(--shadow); position: relative;}
+  .product-image::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: radial-gradient(circle at top right, rgba(57,71,227,0.2), transparent 50%); border-radius: 40px; pointer-events: none;}
+  .mockup-window{background:#0a0d12; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.1); box-shadow: 0 20px 40px rgba(0,0,0,0.5);}
+  .mockup-header{height:30px; background:#1a1e2b; display:flex; align-items:center; padding:0 12px; gap:6px;}
+  .mockup-dot{width:10px; height:10px; border-radius:50%; background:#444;}
+  .mockup-dot.r{background:#ef6f74;} .mockup-dot.y{background:#efc62e;} .mockup-dot.g{background:#38b6ad;}
+  .mockup-body{padding:30px; color:#ddd; font-family: monospace; font-size: 14px; line-height: 1.6;}
+  .list-check{list-style:none; padding:0; margin:0;}
+  .list-check li{position:relative; padding-left:32px; margin-bottom:16px; font-size:18px; line-height:1.5;}
+  .list-check li::before{content:'✓'; position:absolute; left:0; top:0; color:var(--blue); font-weight:bold; font-size:18px;}
+
+  /* CONCEPT PANELS */
+  .concept-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  .concept-panel{background:#faf5e9; color:#111; border-radius:32px; padding:40px; box-shadow:var(--shadow);}
+  .concept-panel.dark{background:#101520; color:white; border:1px solid var(--line);}
+  .concept-panel h3{font-size:32px; margin:0 0 20px; letter-spacing:-.04em;}
+  .concept-panel p{font-size:18px; line-height:1.6; margin:0 0 20px; color:#444;}
+  .concept-panel.dark p{color:var(--muted);}
+  .concept-tag{display:inline-block; padding:6px 14px; border-radius:999px; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform: uppercase; margin-bottom: 20px;}
+  .tag-ai{background:rgba(239,111,116,.15); color:var(--coral);}
+  .tag-db{background:rgba(56,182,173,.15); color:var(--teal);}
+
+  /* ROADMAP */
+  .timeline{display:flex; flex-direction: column; gap:20px; position: relative;}
+  .timeline::before { content: ''; position: absolute; left: 30px; top: 20px; bottom: 20px; width: 2px; background: rgba(255,255,255,0.1); }
+  .step{background:rgba(255,255,255,.03); border:1px solid var(--line); border-radius:28px; padding:32px 32px 32px 80px; position:relative;}
+  .step-marker{position: absolute; left: 16px; top: 36px; width: 30px; height: 30px; border-radius: 50%; background: var(--bg); border: 4px solid var(--blue); display: grid; place-items: center; z-index: 2;}
+  .step .k{font-size:14px; letter-spacing:.1em; text-transform:uppercase; color:var(--yellow); margin-bottom:8px; font-weight: 700;}
+  .step h4{font-size:28px; margin:0 0 12px; letter-spacing:-.03em;}
+  .step p{margin:0; color:var(--muted); font-size:17px; line-height:1.6;}
+  .step.vision .step-marker{border-color: var(--coral);}
+  .step.vision .k{color: var(--coral);}
+
+  /* TARGET AUDIENCE */
+  .audience-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .audience-card{border:1px solid var(--line); border-radius:24px; padding:32px; text-align: center; background: rgba(0,0,0,0.2);}
+  .audience-card h3{font-size:24px; margin:0 0 12px;}
+  .audience-card p{font-size:16px; color:var(--muted); line-height:1.5; margin:0;}
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px){
+    .hero-grid, .product-grid, .concept-grid {grid-template-columns:1fr;}
+    .usp-grid, .audience-grid {grid-template-columns:1fr 1fr;}
+    .hero-art{min-height:480px;}
+    .planet.large{width:280px; height:280px;}
+    .planet.small{width:180px; height:180px;}
+  }
+  @media (max-width: 768px){
+    .nav-links{display:none;}
+    h1{font-size:52px;}
+    .section-head h2{font-size:40px;}
+    .usp-grid, .audience-grid {grid-template-columns:1fr;}
+    .timeline::before { left: 24px; }
+    .step { padding: 24px 24px 24px 64px; }
+    .step-marker { left: 10px; top: 28px; }
+  }
+  /* SCROLL TO TOP BUTTON */
+  .scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--blue);
+    color: white;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    opacity: 0.8;
+    transition: all 0.2s;
+  }
+  .scroll-top-btn:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+<div class="wrap nav">
+  <a class="brand" href="index.html" style="display: flex; align-items: center;">
+    <svg viewBox="0 0 251 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_110_870)">
+    <path d="M242.204 11.3259L237.387 11.3315C236.54 11.3315 236.115 10.3022 236.713 9.69811L240.116 6.26254C240.487 5.88794 240.486 5.28272 240.115 4.90924L238.261 3.04634C237.889 2.67286 237.288 2.67398 236.918 3.04746L233.515 6.48303C232.917 7.08712 231.893 6.66077 231.892 5.80807L231.887 0.955074C231.887 0.426352 231.46 -0.00112534 230.935 -0.00112534L228.316 0.00224948C227.791 0.00224948 227.367 0.431977 227.367 0.960699L227.373 5.81369C227.373 6.6664 226.351 7.095 225.751 6.49203L222.341 3.06434C221.969 2.69086 221.368 2.69198 220.997 3.06546L219.148 4.93286C218.777 5.30747 218.778 5.91269 219.149 6.28617L222.561 9.71386C223.16 10.3157 222.737 11.3473 221.89 11.3484L217.073 11.354C216.548 11.354 216.124 11.7837 216.124 12.3125L216.127 14.9505C216.127 15.4792 216.553 15.9067 217.078 15.9067L226.436 15.8943C226.961 15.8943 227.386 16.3218 227.387 16.8505L227.399 26.2764C227.399 26.8051 227.826 27.2326 228.351 27.2326L230.97 27.2292C231.495 27.2292 231.919 26.7994 231.919 26.2707L231.907 16.8449C231.907 16.3161 232.331 15.8875 232.856 15.8864L242.213 15.874C242.738 15.874 243.163 15.4443 243.163 14.9156L243.159 12.2776C243.159 11.7489 242.733 11.3214 242.208 11.3214L242.204 11.3259Z" fill="#F16B6C"/>
+    <path d="M0 46.5511V16.4545H4.81548V42.1931H23.232V46.55H0V46.5511Z" fill="white"/>
+    <path d="M25.9077 35.4109C25.9077 28.4486 30.635 23.7767 37.8582 23.7767C45.0814 23.7767 49.4078 27.5948 49.4078 34.3782C49.4078 35.187 49.3631 35.8158 49.2291 36.4897H30.4105C30.5892 40.8016 32.6843 43.0931 37.8135 43.0931C42.4515 43.0931 44.3689 41.5654 44.3689 38.9162V38.5562H49.1844V38.9601C49.1844 43.7219 44.5465 47.0011 37.9464 47.0011C30.6774 47.0011 25.9066 42.8681 25.9066 35.412L25.9077 35.4109ZM30.4563 33.7932H44.8603V33.7032C44.8603 29.5702 42.4972 27.5937 37.77 27.5937C33.0427 27.5937 30.7243 29.7952 30.4563 33.7921V33.7932Z" fill="white"/>
+    <path d="M53.4661 46.5511V16.4545H58.2816V31.054H58.5496C59.3079 27.2809 62.0283 23.7767 67.6914 23.7767C73.8012 23.7767 76.7885 27.8198 76.7885 33.2544V46.5511H72.0166V34.4232C72.0166 29.9313 70.0098 28.1348 65.4165 28.1348C60.1544 28.1348 58.2816 31.0101 58.2816 35.7258V46.5511H53.4661Z" fill="white"/>
+    <path d="M81.5593 46.5511V24.2256H85.9739V30.2451H86.2866C86.9555 26.651 89.3633 23.7767 93.9118 23.7767C98.9507 23.7767 101.136 27.4148 101.136 31.6378V34.5582H96.3642V32.5816C96.3642 29.3924 95.0264 27.9098 91.7263 27.9098C87.936 27.9098 86.3748 30.0213 86.3748 34.0193V46.5523H81.5593V46.5511Z" fill="white"/>
+    <path d="M103.721 35.4109C103.721 28.4486 108.493 23.7767 115.806 23.7767C122.451 23.7767 127.311 27.5498 127.311 33.1205V33.5693H122.539V33.2994C122.539 29.8402 120.042 28.1336 115.717 28.1336C110.722 28.1336 108.492 30.514 108.492 35.4109C108.492 40.3077 110.722 42.6431 115.717 42.6431C120.042 42.6431 122.539 40.9366 122.539 37.4774V37.1635H127.311V37.6574C127.311 43.227 122.451 47.0011 115.806 47.0011C108.492 47.0011 103.721 42.2843 103.721 35.412V35.4109Z" fill="white"/>
+    <path d="M131.324 46.5511V24.2256H135.739V30.2451H136.052C136.721 26.651 139.128 23.7767 143.677 23.7767C148.716 23.7767 150.901 27.4148 150.901 31.6378V34.5582H146.129V32.5816C146.129 29.3924 144.791 27.9098 141.491 27.9098C137.701 27.9098 136.14 30.0213 136.14 34.0193V46.5523H131.324V46.5511Z" fill="white"/>
+    <path d="M153.397 41.1604C153.397 37.7012 156.162 35.9047 160.532 35.4109L170.61 34.3332V33.0305C170.61 29.3474 169.004 28.0448 164.768 28.0448C160.532 28.0448 158.658 29.3924 158.658 32.6716V32.8516H153.886V32.6716C153.886 27.5959 158.079 23.7779 165.123 23.7779C172.168 23.7779 175.335 27.6409 175.335 32.9866V46.5523H170.92V40.9827H170.609C169.45 44.7557 165.926 47.0022 160.887 47.0022C156.294 47.0022 153.396 44.8457 153.396 41.1627L153.397 41.1604ZM162.183 43.4958C167.222 43.4958 170.611 41.6093 170.611 37.2074L161.915 38.1951C159.418 38.5101 158.214 39.0939 158.214 40.8455C158.214 42.597 159.418 43.4958 162.183 43.4958Z" fill="white"/>
+    <path d="M181.759 46.5511V28.2686H178.414V24.2256H181.803C182.338 19.3298 186.039 16.4545 192.328 16.4545H194.513V20.0487H191.569C188.047 20.0487 186.218 20.9914 186.486 24.2256H197.188V19.3298H202.003V24.2256H210.03V28.2686H202.003V38.7351C202.003 41.4754 203.207 42.1943 206.017 42.1943H210.03V46.5511H204.902C200.175 46.5511 197.188 44.4396 197.188 39.0051V28.2697H186.574V46.5523H181.757L181.759 46.5511Z" fill="white"/>
+    <path d="M211.99 46.5512V42.8478H215.216V46.5512H211.99Z" fill="white"/>
+    <path d="M216.828 43.6837C216.828 41.8444 218.299 40.8882 220.623 40.6261L225.982 40.0524V39.3594C225.982 37.4009 225.128 36.7079 222.875 36.7079C220.623 36.7079 219.627 37.4245 219.627 39.1682V39.2638H217.09V39.1682C217.09 36.4683 219.319 34.4378 223.065 34.4378C226.812 34.4378 228.496 36.4919 228.496 39.3347V46.5489H226.149V43.5869H225.982C225.366 45.5938 223.492 46.7885 220.813 46.7885C218.37 46.7885 216.828 45.6422 216.828 43.6826V43.6837ZM221.5 44.9267C224.18 44.9267 225.982 43.9233 225.982 41.5823L221.358 42.1076C220.03 42.2753 219.39 42.5857 219.39 43.5172C219.39 44.4486 220.03 44.9267 221.501 44.9267H221.5Z" fill="white"/>
+    <path d="M231.009 46.5511V34.6785H233.356V37.8801H233.523C233.878 35.9688 235.159 34.44 237.578 34.44C240.258 34.44 241.419 36.3749 241.419 38.6203V40.1727H238.882V39.122C238.882 37.4256 238.171 36.6382 236.415 36.6382C234.399 36.6382 233.57 37.7609 233.57 39.887V46.5523H231.009V46.5511Z" fill="white"/>
+    <path d="M248.296 46.5511C245.759 46.5511 244.193 45.4285 244.193 42.5374V36.8283H242.201V34.6785H244.193V32.0743H246.731V34.6785H250.999V36.8283H246.731V42.3945C246.731 43.8513 247.395 44.2338 248.865 44.2338H250.999V46.5511H248.295H248.296Z" fill="white"/>
+    </g>
+    <defs>
+    <clipPath id="clip0_110_870">
+    <rect width="251" height="47" fill="white"/>
+    </clipPath>
+    </defs>
+    </svg>
+  </a>
+  <nav class="nav-links">
+    <a href="#produkt">Produkt</a>
+    <a href="#philosophie">Philosophie</a>
+    <a href="#vorteile">Vorteile</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
+  <div class="nav-meta">
+    <a href="telekom_pitch.html" class="btn btn-tech">Technical Pitch</a>
+  </div>
+</div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+<div class="wrap hero-grid">
+  <div class="hero-copy">
+    <div class="eyebrow">EdTech für den DACH-Raum</div>
+    <h1>Was verlässlich führt, das bleibt.</h1>
+    <p>Wir verbinden kuratierte Fachdidaktik mit sicherer KI-Technologie. Lehrcraft.art produziert schlüsselfertige, multimediale Lerneinheiten für Lehrkräfte – angetrieben von einer intelligenten, kontrollierten Infrastruktur.</p>
+    <div class="button-row">
+      <a class="btn btn-main" href="#produkt">Entdecken</a>
+      <a class="btn btn-outline" href="#philosophie">Unsere Philosophie</a>
+    </div>
+  </div>
+  
+  <div aria-hidden="true" class="hero-art">
+    <div class="ring one"></div>
+    <div class="ring two"></div>
+    <div class="beam"></div>
+    <div class="planet large">
+      <div>
+        <div class="planet-label">LLM</div>
+        <div class="planet-sub">Sicheres Interface</div>
+      </div>
+    </div>
+    <div class="planet small">
+      <div>
+        <div class="planet-label">DB</div>
+        <div class="planet-sub">Kuratierte Fakten</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PRODUCT SHOWCASE -->
+<section class="section light" id="produkt">
+<div class="wrap">
+  <div class="section-head left">
+    <div class="overline">Das Angebot</div>
+    <h2>Multimediale Magazine<br>für die Sekundarstufe I</h2>
+    <p>Lehrcraft.art liefert Lehrkräften sofort einsatzbereiten Projektunterricht in den Fächern Musik, NaWi, Geschichte und Kunst. Kein Vorbereitungsstress, maximale Qualität.</p>
+  </div>
+  
+  <div class="product-grid">
+    <div>
+      <ul class="list-check">
+        <li><strong>Komplettpaket pro Thema:</strong> 10-Minuten-Video, Audio-Podcasts, ca. 30-seitiges interaktives Magazin und ein didaktischer Leitfaden.</li>
+        <li><strong>B2C & B2B Modell:</strong> Lehrkräfte kaufen Einzelausgaben (z.B. J.S. Bach, Frida Kahlo) für 19,99 € oder Schulen lizenzieren den Zugang für das Kollegium.</li>
+        <li><strong>Digital & Print:</strong> Materialien können im Browser genutzt (BYOD) oder klassisch als PDF mit Wasserzeichen ausgedruckt werden.</li>
+        <li><strong>Plug-and-Play:</strong> Alles ist didaktisch vorstrukturiert. Lehrkräfte können direkt unterrichten.</li>
+      </ul>
+    </div>
+    <div class="product-image">
+      <div class="mockup-window">
+        <div class="mockup-header">
+          <div class="mockup-dot r"></div>
+          <div class="mockup-dot y"></div>
+          <div class="mockup-dot g"></div>
+        </div>
+        <div class="mockup-body">
+          <span style="color:var(--teal)">></span> Lade Modul: "J.S. Bach - Der Rebell"<br>
+          <span style="color:var(--muted)">[OK] Video-Assets geladen (AWS S3)</span><br>
+          <span style="color:var(--muted)">[OK] Interaktives PDF generiert</span><br>
+          <span style="color:var(--yellow)">></span> Status: Bereit für den Unterricht.<br><br>
+          <div style="padding: 20px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center; border: 1px dashed rgba(255,255,255,0.2);">
+            <div style="font-size: 24px; color: white; margin-bottom: 10px;">Johann Sebastian Bach</div>
+            <div style="font-size: 16px; color: var(--muted);">Ein Leben zwischen Genie und Rebellion</div>
+            <div style="margin-top: 20px; display: inline-block; padding: 8px 16px; background: var(--blue); color: white; border-radius: 20px; font-size: 12px;">Modul Starten ▶</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PHILOSOPHY / AI CONCEPT -->
+<section class="section dark" id="philosophie">
+<div class="wrap">
+  <div class="section-head">
+    <div class="overline">Die Technologie-Philosophie</div>
+    <h2>LLM als Interface, nicht als Autor</h2>
+    <p>Generative KI in der Bildung neigt zum Halluzinieren. Wir lösen dieses Problem durch eine strikte Trennung von Sprachmodell und Fachwissen.</p>
+  </div>
+  
+  <div class="concept-grid">
+    <div class="concept-panel dark">
+      <div class="concept-tag tag-db">Schritt 1: Die Fachdatenbank</div>
+      <h3>Kuratierte Wahrheit</h3>
+      <p>Unser System speist sich nicht aus dem offenen Internet. Alle Lerninhalte, historischen Fakten und Aufgaben liegen in einer von Pädagogen streng kuratierten Datenbank. Das ist unsere "Wahrheit".</p>
+    </div>
+    <div class="concept-panel">
+      <div class="concept-tag tag-ai">Schritt 2: Das Sprachmodell</div>
+      <h3>Der didaktische Tutor</h3>
+      <p>Das KI-Modell fungiert lediglich als Schnittstelle. Es darf keine Inhalte erfinden, sondern formuliert die Fakten aus der Datenbank adressatengerecht um, gibt gestufte Hilfestellungen und führt die Lernenden sicher ans Ziel.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- USPs -->
+<section class="section dark" id="vorteile">
+<div class="wrap">
+  <div class="section-head">
+    <div class="overline">Unsere Alleinstellungsmerkmale</div>
+    <h2>Was Lehrcraft einzigartig macht</h2>
+  </div>
+  
+  <div class="usp-grid">
+    <div class="usp-card blue">
+      <div class="icon">🎭</div>
+      <h3>Emotionales Storytelling</h3>
+      <p>Historische Persönlichkeiten als Identifikationsfiguren. Wir präsentieren Bach, Kahlo oder Einstein nicht als trockene Fakten, sondern als Menschen mit Brüchen und Visionen.</p>
+    </div>
+    <div class="usp-card yellow">
+      <div class="icon">🚀</div>
+      <h3>Anleitung zum Gelingen</h3>
+      <p>Prozesssicherer Projektunterricht. Unsere Einheiten sind komplett durchdacht und erfordern null Vorbereitungsaufwand für die Lehrkraft. Echte Entlastung im Schulalltag.</p>
+    </div>
+    <div class="usp-card teal">
+      <div class="icon">🛡️</div>
+      <h3>Kuratierte Sicherheit</h3>
+      <p>Visuell homogen und technisch robust. Feste Layout-Regeln und didaktische Restriktionen garantieren Materialien, die in jedem Browser und auf jedem Drucker perfekt funktionieren.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TARGET AUDIENCE -->
+<section class="section light">
+<div class="wrap">
+  <div class="section-head">
+    <div class="overline">Für wen wir bauen</div>
+    <h2>Unsere Zielgruppen</h2>
+  </div>
+  
+  <div class="audience-grid">
+    <div class="audience-card">
+      <div style="font-size: 40px; margin-bottom: 20px;">👩‍🏫</div>
+      <h3>Für Lehrkräfte</h3>
+      <p>Sofortiger Zugang zu hochwertigen Materialien im B2C-Modell. Weniger Vorbereitung, mehr Fokus auf den direkten Austausch mit der Klasse.</p>
+    </div>
+    <div class="audience-card">
+      <div style="font-size: 40px; margin-bottom: 20px;">🏫</div>
+      <h3>Für Schulen & Länder</h3>
+      <p>Skalierbare B2B-Lizenzen, DSGVO-konformes Hosting in Deutschland und anpassbare Inhalte nach länderspezifischen Bildungsplänen.</p>
+    </div>
+    <div class="audience-card">
+      <div style="font-size: 40px; margin-bottom: 20px;">🎓</div>
+      <h3>Für Lernende (Vision)</h3>
+      <p>In Zukunft: Direkter Dialog mit sicheren KI-Avataren historischer Figuren, gestützt durch unsere halluzinationsfreie Datenbank-Architektur.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section dark" id="roadmap">
+<div class="wrap">
+  <div class="section-head left">
+    <div class="overline">Phasenplan</div>
+    <h2>Wo wir stehen & wohin wir wollen</h2>
+  </div>
+  
+  <div class="timeline">
+    <div class="step">
+      <div class="step-marker"></div>
+      <div class="k">Phase 1 · Ab April 2026</div>
+      <h4>Technische Basis & Prototyp</h4>
+      <p>Testserver geht live: Login-System, Content-Viewer und das erste vollständige "J.S. Bach" Magazin. Erste Lehrkräfte testen die Plattform. Infrastruktur läuft auf sicheren Servern.</p>
+    </div>
+    
+    <div class="step">
+      <div class="step-marker"></div>
+      <div class="k">Phase 2 · Ab Q3 2026</div>
+      <h4>Skalierung & B2B Vertrieb</h4>
+      <p>Einsatz des internen KI-Authoring-Tools zur massiven Beschleunigung der Magazinproduktion. Ausbau auf 10+ Magazine. Start des Abo-Modells und der B2B-Schullizenzen (z.B. über DigitalPakt). Geplantes Infrastruktur-Upgrade auf Telekom TechBoost.</p>
+    </div>
+    
+    <div class="step vision">
+      <div class="step-marker"></div>
+      <div class="k">Langfristige Vision</div>
+      <h4>Interaktive KI-Avatare</h4>
+      <p>Lernende treten in direkten, text- und später sprachbasierten Dialog mit historischen Persönlichkeiten. Das System nutzt ein geschlossenes LLM, das ausschließlich auf kuratiertem Lehrcraft-Content trainiert ist – 100% sicher für den Unterricht.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="section light" style="padding: 60px 0;">
+<div class="wrap" style="text-align: center;">
+  <h2 style="font-size: 32px; margin-bottom: 24px; letter-spacing: -0.02em;">Bereit für die technischen Details?</h2>
+  <p style="color: #444; font-size: 18px; max-width: 600px; margin: 0 auto 30px;">Erfahren Sie, wie wir diese Vision durch Next.js, FastAPI, PostgreSQL und eine europäische, DSGVO-konforme Infrastruktur realisieren.</p>
+  <a href="telekom_pitch.html" class="btn btn-tech" style="font-size: 18px; padding: 16px 32px;">Zum Technical Pitch ➔</a>
+</div>
+</section>
+
+<!-- SCROLL TO TOP BUTTON -->
+<a href="#top" class="scroll-top-btn" aria-label="Scroll to top">↑</a>
+
+</main>
+</body>
+</html>
